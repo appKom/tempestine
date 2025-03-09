@@ -61,25 +61,28 @@ class SongListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 32 + 4,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            name,
-            style: TextStyle(
-              color: OnlineTheme.current.fg,
-              fontSize: 16,
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 32 + 4,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              name,
+              style: TextStyle(
+                color: OnlineTheme.current.fg,
+                fontSize: 16,
+              ),
             ),
-          ),
-          Icon(
-            LucideIcons.chevron_right,
-            color: OnlineTheme.current.mutedForeground,
-            size: 20,
-          ),
-        ],
+            Icon(
+              LucideIcons.chevron_right,
+              color: OnlineTheme.current.mutedForeground,
+              size: 20,
+            ),
+          ],
+        ),
       ),
     );
   }
