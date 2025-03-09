@@ -43,25 +43,25 @@ class OnlineShell extends StatelessWidget {
   const OnlineShell(this.content, {super.key});
 
   Widget header(BuildContext context) {
-    final padding = MediaQuery.of(context).padding;
+    // final padding = MediaQuery.of(context).padding;
 
     return ClipRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
           decoration: BoxDecoration(
-            color: OnlineTheme.current.bg.withValues(alpha: 0.8),
+            color: OnlineTheme.current.bg.withValues(alpha: 0.2),
             border: Border(
               bottom: BorderSide(
-                color: OnlineTheme.current.border,
+                color: OnlineTheme.current.fg.withAlpha(25),
                 width: 1,
               ),
             ),
           ),
           child: Padding(
             padding: EdgeInsets.only(
-              left: padding.left + 24,
-              right: padding.right + 24,
+              // left: padding.left + 24,
+              // right: padding.right + 24,
               bottom: 16,
             ),
             child: Align(
@@ -74,12 +74,12 @@ class OnlineShell extends StatelessWidget {
                   AnimatedButton(
                     onTap: () {
                       context.go('/');
-                      NavbarState.setActiveHome();
+                      NavbarHelper.setActiveHome();
                     },
                     childBuilder: ((context, hover, pointerDown) {
                       return SvgPicture.asset(
                         'assets/svg/online_logo.svg',
-                        height: 36,
+                        height: 32,
                       );
                     }),
                   ),
@@ -203,7 +203,7 @@ final GoRouter router = GoRouter(
         GoRoute(
           path: '/social',
           pageBuilder: (context, state) => NoTransitionPage<void>(
-            child: const GamesPage(),
+            child: const PartyPage(),
           ),
           routes: [
             GoRoute(

@@ -34,8 +34,8 @@ class Hobbies extends StatelessWidget {
           options: getCarouselOptions(context),
           items: List.generate(3, (i) {
             return const SkeletonLoader(
-              width: 150,
-              height: 150,
+              width: 100,
+              height: 100,
               borderRadius: BorderRadius.all(
                 Radius.circular(100),
               ),
@@ -88,11 +88,11 @@ class Hobbies extends StatelessWidget {
     final isMobile = OnlineTheme.isMobile(context);
 
     return CarouselOptions(
-      height: 150,
+      height: 100,
       enableInfiniteScroll: true,
       padEnds: true,
-      enlargeCenterPage: isMobile,
-      viewportFraction: isMobile ? 0.45 : 0.3,
+      enlargeCenterPage: true,
+      viewportFraction: isMobile ? 0.3 : 0.3,
       enlargeFactor: 0.2,
       clipBehavior: Clip.none,
     );
@@ -126,9 +126,8 @@ class HobbiesCard extends StatelessWidget {
         child: Container(
           color: OnlineTheme.current.bg,
           child: const ClipOval(
-            child: SizedBox(
-              height: 150,
-              width: 150,
+            child: SizedBox.square(
+              dimension: 100,
               child: ImageDefault(),
             ),
           ),
@@ -140,9 +139,8 @@ class HobbiesCard extends StatelessWidget {
       child: Container(
         color: OnlineTheme.current.fg,
         child: ClipOval(
-          child: SizedBox(
-            height: 150,
-            width: 150,
+          child: SizedBox.square(
+            dimension: 100,
             child: CachedNetworkImage(
               imageUrl: model.image!.xs,
               fit: BoxFit.cover,

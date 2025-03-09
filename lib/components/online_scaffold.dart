@@ -46,6 +46,7 @@ abstract class _OnlinePage extends StatelessWidget {
 }
 
 /// Online logo, valgfri header og scrollbart innhold med fade
+@Deprecated("This is somehow never used but still referenced throughout the app. It should be removed.")
 class OnlineScaffold extends StatelessWidget {
   final Widget child;
   final bool showHeaderNavbar; // Flag to control visibility
@@ -78,7 +79,7 @@ class OnlineScaffold extends StatelessWidget {
                 AnimatedButton(
                   onTap: () {
                     AppNavigator.replaceWithPage(const HomePage());
-                    NavbarState.setActiveHome();
+                    NavbarHelper.setActiveHome();
                   },
                   childBuilder: ((context, hover, pointerDown) {
                     return SvgPicture.asset(
@@ -98,12 +99,12 @@ class OnlineScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: showHeaderNavbar ? onlineHeader(context) : null, // Conditionally show the app bar
+      //appBar: showHeaderNavbar ? onlineHeader(context) : null, // Conditionally show the app bar
       backgroundColor: OnlineTheme.current.bg,
       extendBodyBehindAppBar: true,
       body: child, // Render the page content
       extendBody: true,
-      bottomNavigationBar: showHeaderNavbar ? const Navbar() : null, // Conditionally show the navbar
+      // bottomNavigationBar: showHeaderNavbar ? const Navbar() : null, // Conditionally show the navbar
     );
   }
 }

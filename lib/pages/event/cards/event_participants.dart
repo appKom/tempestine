@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:online/theme/themed_icon.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 
-import '../participant_overlay.dart';
 import '/components/separator.dart';
 import '/core/models/attendee_info_model.dart';
 import '/core/models/event_model.dart';
 import '/theme/theme.dart';
+import '../participant_overlay.dart';
 
 class EventParticipants extends StatelessWidget {
   const EventParticipants({super.key, required this.model, required this.attendeeInfoModel});
@@ -82,12 +82,12 @@ class EventParticipants extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: statusColors.fill,
                     borderRadius: OnlineTheme.buttonRadius,
-                    border: Border.fromBorderSide(BorderSide(color: statusColors.border, width: 2)),
+                    border: Border.fromBorderSide(BorderSide(color: statusColors.border, width: 1)),
                   ),
                   alignment: Alignment.center,
-                  child: ThemedIcon(
-                    icon: IconType.usersFilled,
-                    size: 16,
+                  child: Icon(
+                    LucideIcons.users,
+                    size: 20,
                     color: statusColors.icon,
                   ),
                 ),
@@ -96,7 +96,7 @@ class EventParticipants extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center, // Align children in the center vertically
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'Påmeldte',

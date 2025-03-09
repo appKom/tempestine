@@ -1,5 +1,6 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:flutter_platform_alert/flutter_platform_alert.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -70,11 +71,12 @@ class FoldoutState extends State<Foldout> {
             Expanded(child: Text(widget.title, style: OnlineTheme.textStyle())),
             AnimatedRotation(
               turns: open ? 0.5 : 0,
-              duration: Duration(milliseconds: 100),
+              duration: Duration(milliseconds: 180),
               child: widget.trailing ??
-                  Lucide(
-                    LucideIcon.chevronDown,
+                  Icon(
+                    LucideIcons.chevron_down,
                     size: 20,
+                    color: OnlineTheme.current.fg,
                   ),
             ),
           ],
@@ -88,7 +90,7 @@ class FoldoutState extends State<Foldout> {
       child: AnimatedAlign(
         alignment: open ? Alignment.topCenter : Alignment.topCenter,
         heightFactor: open ? 1.0 : 0.0,
-        duration: Duration(milliseconds: 200),
+        duration: Duration(milliseconds: 180),
         curve: Curves.easeInOut,
         child: Padding(
           padding: widget.contentPadding ?? EdgeInsets.zero,

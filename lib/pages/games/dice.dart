@@ -1,6 +1,9 @@
 import 'dart:math';
+import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import '/components/animated_button.dart';
 import '/components/online_scaffold.dart';
@@ -26,6 +29,8 @@ class StatefulDiceState extends State<StatefulDice> with SingleTickerProviderSta
   int _diceRoll = 1;
   late AnimationController _animationController;
   final _random = Random();
+  bool _isSimulator = false;
+  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
 
   int _step = 0;
   int _direction = 1;
@@ -39,6 +44,16 @@ class StatefulDiceState extends State<StatefulDice> with SingleTickerProviderSta
     );
 
     _animationController.addListener(_animate);
+    _checkIfSimulator();
+  }
+
+  Future<void> _checkIfSimulator() async {
+    if (Platform.isIOS) {
+      final iosInfo = await _deviceInfo.iosInfo;
+      setState(() {
+        _isSimulator = !iosInfo.isPhysicalDevice;
+      });
+    }
   }
 
   void _animate() {
@@ -52,6 +67,23 @@ class StatefulDiceState extends State<StatefulDice> with SingleTickerProviderSta
         _diceRoll = _random.nextInt(6) + 1;
       });
     }
+
+    // Add heavy haptic feedback when animation completes and dice shows 6
+    if (_animationController.isCompleted && _diceRoll == 6) {
+      _triggerHeavyHaptic();
+    }
+  }
+
+  void _triggerLightHaptic() {
+    if (!_isSimulator) {
+      HapticFeedback.lightImpact();
+    }
+  }
+
+  void _triggerHeavyHaptic() {
+    if (!_isSimulator) {
+      HapticFeedback.heavyImpact();
+    }
   }
 
   @override
@@ -62,6 +94,9 @@ class StatefulDiceState extends State<StatefulDice> with SingleTickerProviderSta
 
   void rollDice() {
     if (_animationController.isAnimating) return;
+
+    // Add light haptic feedback when dice is tapped
+    _triggerLightHaptic();
 
     _animationController.reset();
     _step = 0;
@@ -108,19 +143,6 @@ class StatefulDiceState extends State<StatefulDice> with SingleTickerProviderSta
                 ),
               ],
             ),
-            // Positioned(
-            //   top: padding.right,
-            //   right: 0,
-            //   child: AnimatedButton(onTap: () {
-            //     context.go('/social');
-            //   }, childBuilder: (context, hover, pointerDown) {
-            //     return Icon(
-            //       Icons.close_outlined,
-            //       color: OnlineTheme.current.fg,
-            //       size: 32,
-            //     );
-            //   }),
-            // ),
           ],
         ),
       ),

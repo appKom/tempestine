@@ -8,7 +8,7 @@ Widget skeletonLoader(BuildContext context) {
   final padding = MediaQuery.of(context).padding + OnlineTheme.horizontalPadding;
 
   final time = DateTime.now();
-  String monthName = norwegianMonths[time.month - 1];
+  String monthName = NORWEGIAN_MONTHS[time.month - 1];
   int year = time.year;
 
   return Padding(
@@ -28,7 +28,7 @@ Widget skeletonLoader(BuildContext context) {
           ),
         ),
         // const SizedBox(height: 30),
-        CalendarCardState.buildCustomWeekdayHeaders(),
+        CalendarCardState.buildWeekdayHeader(),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,

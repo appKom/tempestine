@@ -54,7 +54,7 @@ class SpinLineState extends State<SpinLine> with SingleTickerProviderStateMixin 
   ];
 
   void spin() {
-    final randomDuration = 2500 + random.nextInt(2500);
+    final randomDuration = 5000 + random.nextInt(5000);
 
     randomCurve = curves[random.nextInt(curves.length)];
     startRotation = rotation;

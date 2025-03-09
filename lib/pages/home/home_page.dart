@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:online/pages/home/christmas/christmas_countdown.dart';
 
 import '/components/animated_button.dart';
 import '/components/online_scaffold.dart';
@@ -20,69 +19,60 @@ class HomePage extends ScrollablePage {
 
     final theme = OnlineTheme.current;
 
-    final year = DateTime.now().year;
-    final month = DateTime.now().month;
-    final day = DateTime.now().day;
-
     return Padding(
-      padding: EdgeInsets.only(top: padding.top + 64, bottom: 64),
+      padding: EdgeInsets.only(top: padding.top + 96, bottom: 96),
       child: Column(
         children: [
-          // Show christmas countdown as long as it is 2024 and not after December 24th
-          if (year == 2024 && !(month == 12 && day > 24)) ChristmasCountdown(),
           Padding(
             padding: EdgeInsets.only(left: padding.left, right: padding.right),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
+              spacing: 24,
               children: [
-                const SizedBox(height: 24),
                 Text(
                   'Kommende Arrangementer',
                   style: OnlineTheme.header(),
                   textAlign: TextAlign.center,
                 ),
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 24),
-                  child: ValueListenableBuilder(
-                    valueListenable: Client.eventsCache,
-                    builder: (context, events, child) {
-                      final now = DateTime.now();
+                ValueListenableBuilder(
+                  valueListenable: Client.eventsCache,
+                  builder: (context, events, child) {
+                    final now = DateTime.now();
 
-                      final List<EventModel> futureEvents = [];
+                    final List<EventModel> futureEvents = [];
 
-                      for (MapEntry<int, EventModel> entry in events.entries) {
-                        final event = entry.value;
-                        final eventDate = DateTime.parse(event.endDate);
+                    for (MapEntry<int, EventModel> entry in events.entries) {
+                      final event = entry.value;
+                      final eventDate = DateTime.parse(event.endDate);
 
-                        if (eventDate.isAfter(now)) {
-                          futureEvents.add(event);
-                        }
+                      if (eventDate.isAfter(now)) {
+                        futureEvents.add(event);
                       }
+                    }
 
-                      if (futureEvents.isEmpty) {
-                        return Column(
-                          children: List.generate(4, (_) => EventCard.skeleton()),
-                        );
-                      }
-                      double eventHeight = 400;
-
-                      if (futureEvents.length < 4) {
-                        eventHeight = futureEvents.length * 100;
-                      }
-
-                      return SizedBox(
-                        height: eventHeight,
-                        child: ListView.builder(
-                          itemCount: futureEvents.length,
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) => EventCard(
-                            model: futureEvents[index],
-                          ),
-                        ),
+                    if (futureEvents.isEmpty) {
+                      return Column(
+                        children: List.generate(4, (_) => EventCard.skeleton()),
                       );
-                    },
-                  ),
+                    }
+                    double eventHeight = 400;
+
+                    if (futureEvents.length < 4) {
+                      eventHeight = futureEvents.length * 100;
+                    }
+
+                    return SizedBox(
+                      height: eventHeight,
+                      child: ListView.builder(
+                        itemCount: futureEvents.length,
+                        padding: EdgeInsets.zero,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) => EventCard(
+                          model: futureEvents[index],
+                        ),
+                      ),
+                    );
+                  },
                 ),
                 ValueListenableBuilder(
                   valueListenable: Client.eventsCache,
@@ -117,7 +107,6 @@ class HomePage extends ScrollablePage {
                     );
                   },
                 ),
-                const SizedBox(height: 24 + 24),
                 ValueListenableBuilder(
                   valueListenable: Client.eventsCache,
                   builder: (context, events, child) {
@@ -125,7 +114,6 @@ class HomePage extends ScrollablePage {
                     return Bedpres(models: events);
                   },
                 ),
-                const SizedBox(height: 24 + 24),
                 ValueListenableBuilder(
                   valueListenable: Client.hobbiesCache,
                   builder: (context, hobbies, child) {
@@ -133,13 +121,11 @@ class HomePage extends ScrollablePage {
                     return Hobbies(hobbies: hobbies);
                   },
                 ),
-                const SizedBox(height: 24 + 24),
                 Text(
                   'Artikler',
                   style: OnlineTheme.header(),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
                 ValueListenableBuilder(
                   valueListenable: Client.articlesCache,
                   builder: (context, articles, child) {
@@ -147,7 +133,6 @@ class HomePage extends ScrollablePage {
                     return Center(child: ArticleCarousel(articles: articles.values.take(5).toList()));
                   },
                 ),
-                const SizedBox(height: 24 + 24),
                 AnimatedButton(
                   onTap: () {
                     context.go('/info');
@@ -171,7 +156,6 @@ class HomePage extends ScrollablePage {
                     );
                   },
                 ),
-                const SizedBox(height: 24),
               ],
             ),
           ),

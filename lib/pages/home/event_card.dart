@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:online/components/icon_label.dart';
-import 'package:online/theme/themed_icon.dart';
 
 import '/components/animated_button.dart';
 import '/components/separator.dart';
@@ -90,7 +90,7 @@ class EventCard extends StatelessWidget {
 
   static Widget skeleton() {
     return const SizedBox(
-      height: 100,
+      height: 80,
       child: Stack(
         children: [
           Padding(
@@ -99,7 +99,7 @@ class EventCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 SizedBox.square(
-                  dimension: 80,
+                  dimension: 60,
                   child: SkeletonLoader(borderRadius: OnlineTheme.buttonRadius),
                 ),
                 SizedBox(
@@ -153,12 +153,10 @@ class EventCard extends StatelessWidget {
     );
   }
 
-  // static final gray = OnlineTheme.white;
-
   Widget defaultWithBorder() {
     return Container(
       decoration: BoxDecoration(
-          border: Border.fromBorderSide(BorderSide(width: 2, color: OnlineTheme.current.border)),
+          border: Border.fromBorderSide(BorderSide(width: 1, color: OnlineTheme.current.border)),
           borderRadius: OnlineTheme.buttonRadius,
           color: OnlineTheme.current.bg),
       child: const ImageDefault(),
@@ -170,14 +168,29 @@ class EventCard extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
-      child: Container(
-        color: OnlineTheme.current.fg,
-        child: CachedNetworkImage(
-          imageUrl: model.images.first.md,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => const SkeletonLoader(width: 100, height: 100),
-          errorWidget: (context, url, error) => defaultWithBorder(),
-        ),
+      child: Stack(
+        children: [
+          Positioned(
+            width: 60,
+            height: 60,
+            left: 0,
+            top: 0,
+            child: CachedNetworkImage(
+              imageUrl: model.images.first.md,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => const SkeletonLoader(width: 60, height: 60),
+              errorWidget: (context, url, error) => defaultWithBorder(),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.fromBorderSide(BorderSide(width: 1, color: OnlineTheme.current.fg.withAlpha(32))),
+                borderRadius: BorderRadius.circular(5),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -185,7 +198,7 @@ class EventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: 80,
       child: Stack(
         children: [
           AnimatedButton(
@@ -198,7 +211,7 @@ class EventCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox.square(
-                      dimension: 80,
+                      dimension: 60,
                       child: eventIcon(),
                     ),
                     const SizedBox(width: 16),
@@ -212,17 +225,15 @@ class EventCard extends StatelessWidget {
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              IconLabel(
-                                icon: IconType.dateTime,
+                              IconLabelLucide(
+                                icon: LucideIcons.calendar_fold,
                                 label: formatDateSpan(model.startDate, model.endDate),
                                 color: OnlineTheme.current.mutedForeground,
-                                fontWeight: 5,
                               ),
-                              IconLabel(
-                                icon: IconType.users,
+                              IconLabelLucide(
+                                icon: LucideIcons.users,
                                 label: participants(),
                                 color: OnlineTheme.current.mutedForeground,
-                                iconSize: 16,
                               ),
                             ],
                           ),
@@ -251,7 +262,7 @@ class EventCard extends StatelessWidget {
       shortenName(),
       style: OnlineTheme.textStyle(
         color: OnlineTheme.current.fg,
-        weight: 6,
+        weight: 5,
       ),
       overflow: TextOverflow.ellipsis,
     );

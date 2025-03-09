@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 import 'package:online/components/image_default.dart';
 
@@ -9,13 +10,12 @@ import '/components/icon_label.dart';
 import '/components/skeleton_loader.dart';
 import '/core/models/article_model.dart';
 import '/theme/theme.dart';
-import '/theme/themed_icon.dart';
 
 class ArticleCarousel extends StatelessWidget {
   final List<ArticleModel> articles;
   const ArticleCarousel({super.key, required this.articles});
 
-  static const months = [
+  static const _months = [
     'Jan',
     'Feb',
     'Mar',
@@ -30,55 +30,64 @@ class ArticleCarousel extends StatelessWidget {
     'Des',
   ];
 
-  int calculateReadingTime(String heading, String ingress) {
-    int wordCount = countWords(heading) + countWords(ingress);
-    return ((wordCount / 238) + 1).ceil(); // Dividing by 238 and rounding up
+  static const _wordsPerMinute = 238;
+  static const _minReadingTime = 1;
+
+  static int _calculateReadingTime(String heading, String ingress) {
+    final wordCount = _countWords(heading) + _countWords(ingress);
+    return ((wordCount / _wordsPerMinute) + _minReadingTime).ceil();
   }
 
-  int countWords(String text) {
-    // Counts the number of words in a given string
+  static int _countWords(String text) {
     return text.split(' ').where((word) => word.isNotEmpty).length;
   }
 
-  String dateToString(ArticleModel article) {
+  static String _formatDate(ArticleModel article) {
     final date = DateTime.parse(article.createdDate);
+    final day = date.day.toString().padLeft(2, '0');
+    final month = _months[date.month - 1];
+    return '$day. $month';
+  }
 
-    final day = date.day;
-    final dayString = day.toString().padLeft(2, '0');
-
-    final month = date.month - 1; // Months go from 1-12 but we need an index of 0-11
-    final monthString = months[month];
-
-    return '$dayString. $monthString';
+  static CarouselOptions _getCarouselOptions(BuildContext context) {
+    final isMobile = OnlineTheme.isMobile(context);
+    return CarouselOptions(
+      height: 300,
+      enableInfiniteScroll: true,
+      padEnds: true,
+      enlargeCenterPage: false,
+      viewportFraction: isMobile ? 0.75 : 0.3,
+      clipBehavior: Clip.none,
+    );
   }
 
   static Widget skeleton(BuildContext context) {
     return CarouselSlider(
-      items: List.generate(3, (i) {
-        return const SkeletonLoader(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        );
-      }),
-      options: getCarouselOptions(context),
+      items: List.generate(
+        3,
+        (_) => const SkeletonLoader(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+      ),
+      options: _getCarouselOptions(context),
     );
   }
 
-  Widget coverImage(ArticleModel article) {
+  Widget _buildCoverImage(ArticleModel article) {
     if (article.image?.original == null) {
       return const ImageDefault();
     }
 
     return CachedNetworkImage(
       imageUrl: article.image!.original,
-      placeholder: (context, url) => const SkeletonLoader(),
-      errorWidget: (context, url, error) => const ImageDefault(),
+      placeholder: (_, __) => const SkeletonLoader(),
+      errorWidget: (_, __, ___) => const ImageDefault(),
     );
   }
 
-  Widget articleCard(ArticleModel article, BuildContext context) {
-    final timeToRead = calculateReadingTime(article.content, article.ingress);
+  Widget _buildArticleCard(ArticleModel article, BuildContext context) {
+    final timeToRead = _calculateReadingTime(article.content, article.ingress);
+
     return AnimatedButton(
       onTap: () => context.go('/articles/${article.createdDate}'),
       childBuilder: (context, hover, pointerDown) {
@@ -96,45 +105,8 @@ class ArticleCarousel extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(width: 2, color: OnlineTheme.current.border)),
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: coverImage(article),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(
-                          article.heading,
-                          style: OnlineTheme.subHeader(),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconLabel(
-                              icon: IconType.dateTime,
-                              label: dateToString(article),
-                              fontSize: 15,
-                            ),
-                            IconLabel(
-                              icon: IconType.clock,
-                              label: '$timeToRead min',
-                              fontSize: 15,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                _buildImageSection(article),
+                _buildContentSection(article, timeToRead),
               ],
             ),
           ),
@@ -143,29 +115,54 @@ class ArticleCarousel extends StatelessWidget {
     );
   }
 
-  static getCarouselOptions(BuildContext context) {
-    final isMobile = OnlineTheme.isMobile(context);
+  Widget _buildImageSection(ArticleModel article) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(width: 2, color: OnlineTheme.current.border)),
+      ),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: _buildCoverImage(article),
+      ),
+    );
+  }
 
-    return CarouselOptions(
-      height: 300,
-      enableInfiniteScroll: true,
-      padEnds: true,
-      enlargeCenterPage: false,
-      viewportFraction: isMobile ? 0.75 : 0.3,
-      clipBehavior: Clip.none,
+  Widget _buildContentSection(ArticleModel article, int timeToRead) {
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              article.heading,
+              style: OnlineTheme.subHeader(),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconLabelLucide(
+                  icon: LucideIcons.calendar_fold,
+                  label: _formatDate(article),
+                ),
+                IconLabelLucide(
+                  icon: LucideIcons.clock,
+                  label: '$timeToRead min',
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
-      options: getCarouselOptions(context),
-      items: List.generate(
-        articles.length,
-        (i) {
-          return articleCard(articles[i], context);
-        },
-      ),
+      options: _getCarouselOptions(context),
+      items: articles.map((article) => _buildArticleCard(article, context)).toList(),
     );
   }
 }

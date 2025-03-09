@@ -7,8 +7,8 @@ import '/components/online_scaffold.dart';
 import '/theme/theme.dart';
 import 'songs/songs.dart';
 
-class GamesPage extends ScrollablePage {
-  const GamesPage({super.key});
+class PartyPage extends ScrollablePage {
+  const PartyPage({super.key});
 
   @override
   Widget content(BuildContext context) {
@@ -22,8 +22,8 @@ class GamesPage extends ScrollablePage {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 24),
-            DrikkeSanger(carouselOptions: getCarouselOptions(context)),
-            const SizedBox(height: 24),
+            DrikkeSanger(),
+            // const SizedBox(height: 24),
             const SizedBox(height: 24),
             Text(
               'Spill',

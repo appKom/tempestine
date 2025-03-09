@@ -373,7 +373,7 @@ class _ProfilePageState extends State<ProfilePage> {
     } else {
       content = [
         constValueTextInput('Klassetrinn', user.year.toString()),
-        constValueTextInput('Startår', user.startedDate!.year.toString()),
+        constValueTextInput('Startet', user.startedDate!.year.toString()),
       ];
     }
 

@@ -87,6 +87,8 @@ PODS:
   - GoogleUtilities/UserDefaults (8.0.2):
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
+  - haptic_feedback (0.5.1):
+    - Flutter
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.7.4)
@@ -137,6 +139,7 @@ DEPENDENCIES:
   - flutter_platform_alert (from `.symlinks/plugins/flutter_platform_alert/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_web_auth_2 (from `.symlinks/plugins/flutter_web_auth_2/ios`)
+  - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - native_ios_dialog (from `.symlinks/plugins/native_ios_dialog/ios`)
@@ -189,6 +192,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_web_auth_2:
     :path: ".symlinks/plugins/flutter_web_auth_2/ios"
+  haptic_feedback:
+    :path: ".symlinks/plugins/haptic_feedback/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker_ios:
@@ -213,43 +218,44 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/darwin"
 
 SPEC CHECKSUMS:
-  app_tracking_transparency: e169b653478da7bb15a6c61209015378ca73e375
+  app_tracking_transparency: 3d84f147f67ca82d3c15355c36b1fa6b66ca7c92
   Auth0: 28cb24cb19ebd51f0b07751f16d83b59f4019532
-  auth0_flutter: f085572268059bc194c7b023d7f432f5ebb72413
-  device_info_plus: 97af1d7e84681a90d0693e63169a5d50e0839a0d
+  auth0_flutter: 7b99a56cc3aef5ca4e0a2a6f1f4e6c4e105dcc2d
+  device_info_plus: 71ffc6ab7634ade6267c7a93088ed7e4f74e5896
   Firebase: 374a441a91ead896215703a674d58cdb3e9d772b
-  firebase_core: feb37e79f775c2bd08dd35e02d83678291317e10
-  firebase_messaging: e2f0ba891b1509668c07f5099761518a5af8fe3c
+  firebase_core: 2337982fb78ee4d8d91e608b0a3d4f44346a93c8
+  firebase_messaging: f3bddfa28c2cad70b3341bf461e987a24efd28d6
   FirebaseCore: 48b0dd707581cf9c1a1220da68223fb0a562afaa
   FirebaseCoreInternal: d98ab91e2d80a56d7b246856a8885443b302c0c2
   FirebaseInstallations: efc0946fc756e4d22d8113f7c761948120322e8c
   FirebaseMessaging: e1aca1fcc23e8b9eddb0e33f375ff90944623021
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_inappwebview_ios: 6f63631e2c62a7c350263b13fa5427aedefe81d4
-  flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
-  flutter_platform_alert: f507baf17889a38794d3cf16b98b637fb69479bd
-  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
-  flutter_web_auth_2: 051cf9f5dc366f31b5dcc4e2952c2b954767be8a
+  flutter_inappwebview_ios: b89ba3482b96fb25e00c967aae065701b66e9b99
+  flutter_local_notifications: ad39620c743ea4c15127860f4b5641649a988100
+  flutter_platform_alert: bf3b5fcd4ac14bd637e20527e9c471633071afd3
+  flutter_secure_storage: 1ed9476fba7e7a782b22888f956cce43e2c62f13
+  flutter_web_auth_2: 3464a7c16dc6480b6194fc89913bae6e82f28405
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 26a3abef001b6533cf678d3eb38fd3f614b7872d
-  image_cropper: 37d40f62177c101ff4c164906d259ea2c3aa70cf
-  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  haptic_feedback: fd1d8509833f58f164fc12122c0357fa9b2750e0
+  image_cropper: 5f162dcf988100dc1513f9c6b7eb42cd6fbf9156
+  image_picker_ios: 7fe1ff8e34c1790d6fff70a32484959f563a928a
   JWTDecode: 3eaab1e06b6f4dcbdd6716aff09ba4c2104ca8b7
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  native_ios_dialog: a698a22b58c5b79f42b4fd2e22262797ce5a441f
-  network_info_plus: 6613d9d7cdeb0e6f366ed4dbe4b3c51c52d567a9
+  native_ios_dialog: aae8e50ef844681b052d45268c67572254ec8a32
+  network_info_plus: cf61925ab5205dce05a4f0895989afdb6aade5fc
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
-  package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
-  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
+  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  sensors_plus: 7229095999f30740798f0eeef5cd120357a8f4f2
-  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  sensors_plus: 6a11ed0c2e1d0bd0b20b4029d3bad27d96e0c65b
+  shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   SimpleKeychain: f8707c8e97b38c6a6e687b17732afc9bcef06439
-  sqflite_darwin: 5a7236e3b501866c1c9befc6771dfd73ffb8702d
+  sqflite_darwin: 20b2a3a3b70e43edae938624ce550a3cbf66a3d0
   TOCropViewController: 80b8985ad794298fb69d3341de183f33d1853654
-  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
-  webview_flutter_wkwebview: 0982481e3d9c78fd5c6f62a002fcd24fc791f1e4
+  url_launcher_ios: 694010445543906933d732453a59da0a173ae33d
+  webview_flutter_wkwebview: 44d4dee7d7056d5ad185d25b38404436d56c547c
 
 PODFILE CHECKSUM: 0add25e559e2a07193cae9f68633c9adb1334a91
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2

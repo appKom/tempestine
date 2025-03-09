@@ -60,7 +60,7 @@ class NotLoggedInPage extends StaticPage {
 
       context.go('/menu/profile');
 
-      NavbarState.setActiveMenu();
+      NavbarHelper.setActiveMenu();
     }
   }
 }

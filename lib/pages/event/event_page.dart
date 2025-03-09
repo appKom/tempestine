@@ -86,22 +86,18 @@ class _EventPageState extends State<EventPage> {
   }
 
   Widget coverImage() {
-    if (widget.model.images.isEmpty) {
-      return AspectRatio(
-        aspectRatio: 16 / 9,
-        child: Container(color: OnlineTheme.current.bg, child: const ImageDefault()),
-      );
-    }
-
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: Container(
-        color: OnlineTheme.current.fg,
-        child: CachedNetworkImage(
-          imageUrl: widget.model.images.first.original,
-          fit: BoxFit.cover,
-          placeholder: (context, url) => const SkeletonLoader(),
-          errorWidget: (context, url, error) => const ImageDefault(),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          color: OnlineTheme.current.fg,
+          child: CachedNetworkImage(
+            imageUrl: widget.model.images.first.original,
+            fit: BoxFit.cover,
+            placeholder: (context, url) => const SkeletonLoader(),
+            errorWidget: (context, url, error) => const ImageDefault(),
+          ),
         ),
       ),
     );
@@ -115,14 +111,6 @@ class _EventPageState extends State<EventPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(width: 2, color: OnlineTheme.current.border),
-              ),
-            ),
-            child: coverImage(),
-          ),
           Padding(
             padding: OnlineTheme.horizontalPadding,
             child: Column(
@@ -133,6 +121,8 @@ class _EventPageState extends State<EventPage> {
                   widget.model.title,
                   style: OnlineTheme.header(),
                 ),
+                if (widget.model.images.isNotEmpty) const SizedBox(height: 24),
+                if (widget.model.images.isNotEmpty) coverImage(),
                 const SizedBox(height: 24),
                 AttendanceCard(event: widget.model, attendeeInfo: attendeeInfoModel),
                 const SizedBox(height: 24),

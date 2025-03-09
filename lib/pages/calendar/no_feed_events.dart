@@ -21,7 +21,7 @@ class NoFeedEventsState extends State<NoFeedEvents> {
     required VoidCallback onLeftArrowTap,
     required VoidCallback onRightArrowTap,
   }) {
-    String monthName = norwegianMonths[focusedDay.month - 1];
+    String monthName = NORWEGIAN_MONTHS[focusedDay.month - 1];
     int year = focusedDay.year;
 
     return SizedBox(

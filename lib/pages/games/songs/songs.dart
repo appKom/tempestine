@@ -1,132 +1,86 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:go_router/go_router.dart';
 
-import '/components/animated_button.dart';
 import '/theme/theme.dart';
 
 class DrikkeSanger extends StatelessWidget {
-  const DrikkeSanger({super.key, required this.carouselOptions});
-
-  final CarouselOptions carouselOptions;
+  const DrikkeSanger({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // List of songs with their routes
+    final songs = [
+      {'name': 'Lambo', 'route': '/social/lambo'},
+      {'name': 'Fader Abraham', 'route': '/social/fader_abraham'},
+      {'name': 'We like to drink with', 'route': '/social/we_like_to_drink'},
+      {'name': 'Nu Klinger', 'route': '/social/nu_klinger'},
+      {'name': 'Studenter Visen', 'route': '/social/studenter_visen'},
+      {'name': 'Kamerater Hev Nu Glasset!', 'route': '/social/kamerater_hev_glasset'},
+      {'name': 'Himmelseng', 'route': '/social/himmelseng'},
+    ];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
           'Sanger',
           style: OnlineTheme.header(),
-          textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 24),
-        CarouselSlider(
-          options: carouselOptions,
-          items: [
-            SongCard(
-              name: 'Lambo',
-              imageSource: 'assets/images/lambo.jpg',
-              onTap: () => context.go('/social/lambo'),
-            ),
-            SongCard(
-              name: 'Nu Klinger',
-              imageSource: 'assets/images/nu_klinger.jpg',
-              onTap: () => context.go('/social/nu_klinger'),
-            ),
-            SongCard(
-              name: 'Studenter Visen',
-              imageSource: 'assets/images/studentervisen.png',
-              onTap: () => context.go('/social/studenter_visen'),
-            ),
-            SongCard(
-              name: 'Kamerater Hev Nu Glasset!',
-              imageSource: 'assets/images/kameraterhevglasset.png',
-              onTap: () => context.go('/social/kamerater_hev_glasset'),
-            ),
-            SongCard(
-              name: 'Himmelseng',
-              imageSource: 'assets/images/himmelseng.png',
-              onTap: () => context.go('/social/himmelseng'),
-            ),
-            SongCard(
-              name: 'Fader Abraham',
-              imageSource: 'assets/images/faderabraham.png',
-              onTap: () => context.go('/social/fader_abraham'),
-            ),
-            SongCard(
-              name: 'We like to drink with',
-              imageSource: 'assets/images/we_like_to_drink.png',
-              onTap: () => context.go('/social/we_like_to_drink'),
-            ),
-            SongCard(
-              name: 'Forever Alone',
-              imageSource: 'assets/images/forever_alone.webp',
-              onTap: () => context.go('/social/forever_alone'),
-            )
-          ],
-        ),
+        SizedBox(height: 16),
+        ListView.separated(
+          padding: EdgeInsets.zero,
+          itemCount: songs.length,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          separatorBuilder: (context, index) => Divider(
+            height: 1,
+            color: OnlineTheme.current.border,
+          ),
+          itemBuilder: (context, index) {
+            return SongListItem(
+              name: songs[index]['name']!,
+              onTap: () => context.go(songs[index]['route']!),
+            );
+          },
+        )
       ],
     );
   }
 }
 
-class SongCard extends StatelessWidget {
+class SongListItem extends StatelessWidget {
   final String name;
-  final String imageSource;
-  final void Function() onTap;
+  final VoidCallback onTap;
 
-  const SongCard({
+  const SongListItem({
     super.key,
     required this.name,
-    required this.imageSource,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedButton(
-      onTap: onTap,
-      childBuilder: (context, hover, pointerDown) {
-        return Container(
-          width: 250,
-          height: 200,
-          decoration: BoxDecoration(
-            border: Border.fromBorderSide(BorderSide(width: 2, color: OnlineTheme.current.border)),
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(width: 2, color: OnlineTheme.current.bg),
-                    ),
-                  ),
-                  child: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Image.asset(
-                      imageSource,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(name, style: OnlineTheme.subHeader()),
-                    ),
-                  ),
-                ),
-              ],
+    return SizedBox(
+      height: 32 + 4,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            name,
+            style: TextStyle(
+              color: OnlineTheme.current.fg,
+              fontSize: 16,
             ),
           ),
-        );
-      },
+          Icon(
+            LucideIcons.chevron_right,
+            color: OnlineTheme.current.mutedForeground,
+            size: 20,
+          ),
+        ],
+      ),
     );
   }
 }

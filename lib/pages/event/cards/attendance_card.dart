@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:online/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -9,7 +10,6 @@ import '/components/separator.dart';
 import '/core/models/attendee_info_model.dart';
 import '/core/models/event_model.dart';
 import '/theme/theme.dart';
-import '/theme/themed_icon.dart';
 import 'event_card.dart';
 import 'event_card_countdown.dart';
 import 'event_date_formater.dart';
@@ -388,12 +388,16 @@ class AttendanceCardState extends State<AttendanceCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          header(),
-          const SizedBox(height: 16),
+          // header(),
+          // const SizedBox(height: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ThemedIcon(icon: IconType.dateTime, size: 20),
+              Icon(
+                LucideIcons.calendar_clock,
+                size: 20,
+                color: OnlineTheme.current.fg,
+              ),
               const SizedBox(width: 8),
               Text(
                 EventDateFormatter.formatEventDates(widget.event.startDate, widget.event.endDate),
@@ -408,7 +412,11 @@ class AttendanceCardState extends State<AttendanceCard> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ThemedIcon(icon: IconType.location, size: 20),
+                Icon(
+                  LucideIcons.map_pin,
+                  size: 20,
+                  color: OnlineTheme.current.fg,
+                ),
                 const SizedBox(width: 8),
                 Text(
                   widget.event.location,

@@ -22,7 +22,7 @@ class CardBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: height / 2),
       decoration: BoxDecoration(
         color: fill,
-        border: Border.all(color: border, width: 2),
+        border: Border.all(color: border, width: 1),
         borderRadius: BorderRadius.circular(height / 2),
       ),
       child: Center(

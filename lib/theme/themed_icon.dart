@@ -100,6 +100,7 @@ enum LucideIcon {
   chevronDown,
 }
 
+@Deprecated("Use LucideIcons.icon_name instead")
 class Lucide extends StatelessWidget {
   Lucide(
     this.icon, {
