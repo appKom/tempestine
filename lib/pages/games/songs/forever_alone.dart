@@ -8,15 +8,9 @@ int year = DateTime.now().year;
 class ForeverAlonePage extends ScrollablePage {
   const ForeverAlonePage({super.key});
 
-  String _getText() {
-    return '''
-  Sangtekster av Kakkmaddafakka 
-''';
-  }
-
   List<List<String>> _getTextLines() {
     return [
-      ["Alle i appkom", "No one can say I didn't try"],
+      ["Alle i Komité", "No one can say I didn't try"],
       ["Alle fra Oslo", "Tried everything to make you feel what I feel"],
       ["Har hatt friår", "Well, I guess I pushed to hard"],
       ["Har tettet doen på A4", "And now you're slipping away"],
@@ -40,7 +34,7 @@ class ForeverAlonePage extends ScrollablePage {
       ["Har kjæreste", "When I held your hand you were sincere"],
       ["Har vært på tinderdate", "But did you ever think about me when I wasn't near you?"],
       ["Har fått sparken", "Why would you ever put me first?"],
-      ["Alle som er '04", "You are second to none"],
+      ["Alle som er 18/19", "You are second to none"],
       ["Alle fra Bergen", "I wanted to leave, I tried to find someone new"],
       ["Bor på Buran", "But I always end up still wanting you"],
       ["Har spydd på A4", "Why do I do this to myself?"],
@@ -73,68 +67,55 @@ class ForeverAlonePage extends ScrollablePage {
     final padding = MediaQuery.of(context).padding + OnlineTheme.horizontalPadding;
 
     return Padding(
-      padding: EdgeInsets.only(top: padding.top, bottom: padding.bottom) + EdgeInsets.symmetric(vertical: 64),
+      padding: padding + EdgeInsets.symmetric(vertical: 64),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            height: 267,
-            child: Image.asset(
-              'assets/images/forever_alone.webp',
-              fit: BoxFit.cover,
-            ),
+          const SizedBox(height: 24),
+          Text(
+            'Forever Alone',
+            style: OnlineTheme.header(),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: padding.left, right: padding.right),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 24),
-                Text(
-                  'Forever Alone',
-                  style: OnlineTheme.header(),
+          const SizedBox(height: 24),
+          Text(
+            "Sangtekster av Kakkmaddafakka",
+            style:
+                OnlineTheme.textStyle(color: OnlineTheme.current.mutedForeground).copyWith(fontStyle: FontStyle.italic),
+          ),
+          Column(
+            children: List.generate(_getTextLines().length, (index) {
+              return SizedBox(
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _getTextLines()[index][0],
+                        style: index % 2 == 0
+                            ? OnlineTheme.textStyle()
+                            : OnlineTheme.textStyle().copyWith(fontWeight: FontWeight.bold),
+                        maxLines: 10,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: Text(
+                        _getTextLines()[index][1],
+                        style: index % 2 == 0
+                            ? OnlineTheme.textStyle()
+                            : OnlineTheme.textStyle().copyWith(fontWeight: FontWeight.bold),
+                        maxLines: 10,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 24),
-                Text(
-                  _getText(),
-                  style: OnlineTheme.textStyle().copyWith(fontStyle: FontStyle.italic),
-                ),
-                Column(
-                  children: List.generate(
-                    _getTextLines().length,
-                    (index){
-                      return SizedBox(
-                        height: 80,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                _getTextLines()[index][0],
-                                style: index % 2 == 0 ? OnlineTheme.textStyle() : OnlineTheme.textStyle().copyWith(fontWeight: FontWeight.bold),
-                                maxLines: 10,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Text(
-                                _getTextLines()[index][1],
-                                style: index % 2 == 0 ? OnlineTheme.textStyle() : OnlineTheme.textStyle().copyWith(fontWeight: FontWeight.bold),
-                                maxLines: 10,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  ),
-                ),
-              ],
-            ),
+              );
+            }),
           ),
         ],
       ),

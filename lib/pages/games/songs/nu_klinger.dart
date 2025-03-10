@@ -55,47 +55,32 @@ Også sitter vi i himmelen og stemmer i vår replikk;\n
     final padding = MediaQuery.of(context).padding + OnlineTheme.horizontalPadding;
 
     return Padding(
-      padding: EdgeInsets.only(top: padding.top, bottom: padding.bottom) + const EdgeInsets.symmetric(vertical: 64),
+      padding: padding + const EdgeInsets.symmetric(vertical: 64),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            height: 267,
-            child: Image.asset(
-              'assets/images/nu_klinger.jpg',
-              fit: BoxFit.cover,
+          const SizedBox(height: 24),
+          Text(
+            'Nu Klinger',
+            style: OnlineTheme.header(),
+          ),
+          const SizedBox(height: 24),
+          MarkdownBody(
+            data: _getText(),
+            styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+              p: OnlineTheme.textStyle(),
+              h1: TextStyle(color: OnlineTheme.current.fg),
+              h2: TextStyle(color: OnlineTheme.current.fg),
+              h3: TextStyle(color: OnlineTheme.current.fg),
+              h4: TextStyle(color: OnlineTheme.current.fg),
+              h5: TextStyle(color: OnlineTheme.current.fg),
+              h6: TextStyle(color: OnlineTheme.current.fg),
+              horizontalRuleDecoration: BoxDecoration(
+                border: Border(top: BorderSide(width: 1, color: OnlineTheme.current.border)),
+              ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: padding.left, right: padding.right),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(height: 24),
-                Text(
-                  'Nu Klinger',
-                  style: OnlineTheme.header(),
-                ),
-                const SizedBox(height: 24),
-                MarkdownBody(
-                  data: _getText(),
-                  styleSheet: MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
-                    p: OnlineTheme.textStyle(),
-                    h1: TextStyle(color: OnlineTheme.current.fg),
-                    h2: TextStyle(color: OnlineTheme.current.fg),
-                    h3: TextStyle(color: OnlineTheme.current.fg),
-                    h4: TextStyle(color: OnlineTheme.current.fg),
-                    h5: TextStyle(color: OnlineTheme.current.fg),
-                    h6: TextStyle(color: OnlineTheme.current.fg),
-                    horizontalRuleDecoration: BoxDecoration(
-                      border: Border(top: BorderSide(width: 1, color: OnlineTheme.current.border)),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          ),
+          const SizedBox(height: 24),
         ],
       ),
     );

@@ -15,6 +15,7 @@ class DrikkeSanger extends StatelessWidget {
       {'name': 'Fader Abraham', 'route': '/social/fader_abraham'},
       {'name': 'We like to drink with', 'route': '/social/we_like_to_drink'},
       {'name': 'Nu Klinger', 'route': '/social/nu_klinger'},
+      {'name': "Forever Alone", 'route': '/social/forever_alone'},
       {'name': 'Studenter Visen', 'route': '/social/studenter_visen'},
       {'name': 'Kamerater Hev Nu Glasset!', 'route': '/social/kamerater_hev_glasset'},
       {'name': 'Himmelseng', 'route': '/social/himmelseng'},
@@ -63,6 +64,7 @@ class SongListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      behavior: HitTestBehavior.opaque,
       child: SizedBox(
         height: 32 + 4,
         child: Row(
