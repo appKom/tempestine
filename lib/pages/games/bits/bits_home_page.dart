@@ -137,7 +137,7 @@ class BitsHomePageState extends State<BitsHomePage> {
 
     List<String> playerNames = controllers.map((c) => c.text.trim()).toList();
 
-    context.go('/social/games/bitsgame', extra: playerNames);
+    context.go('/social/bitsgame', extra: playerNames);
   }
 
   @override

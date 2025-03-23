@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:online/pages/games/bits/bits_card.dart';
 
-import '/services/app_navigator.dart';
 import '/theme/theme.dart';
 import 'bits_model.dart';
 
@@ -145,7 +145,7 @@ class _BitsGameState extends State<BitsGame> {
             ),
           ),
           AnimatedButton(
-            onTap: AppNavigator.pop,
+            onTap: () => context.go('/social'),
             scale: 0.9,
             childBuilder: (context, hover, pointerDown) {
               return ThemedIcon(
